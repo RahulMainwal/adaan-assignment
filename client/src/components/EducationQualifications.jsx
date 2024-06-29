@@ -282,8 +282,8 @@ function EducationQualifications({ userEducationQualification }) {
                                 <div>
                                     <div><b>Board:</b> {education.board}</div>
                                     <div><b>Stream:</b> {education.stream}</div>
-                                    <div><b>Passing Year</b> {education.passingYear}</div>
-                                    <div><b>Marks</b> {education.marks}</div>
+                                    <div><b>Passing Year:</b> {education.passingYear}</div>
+                                    <div><b>Marks:</b> {education.marks}</div>
                                 </div>
 
                                 <div style={{ display: "flex", justifyContent: "end" }}>
