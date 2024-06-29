@@ -33,6 +33,10 @@ app.use(cookieParser());
 //     })
 // });
 
+app.get("/", (req, res) => {
+    res.send("Hello from server")
+})
+
 app.use("/api/v1/user", userRouter);
 
 connectDB()
