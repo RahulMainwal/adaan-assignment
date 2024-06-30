@@ -37,7 +37,7 @@ function Login() {
                     theme: "light",
                 });
                 // console.log(data?.data?.loginToken)
-                setCookie('loginToken', data?.data?.loginToken, { path: '/' });
+                setCookie('loginToken', data?.data?.loginToken, { path: '/', maxAge: 2592000 });
                 navigate("/");
             } else {
                 toast.error(data.message, {
