@@ -1,4 +1,5 @@
 const ApiHandler = require('../utils/ApiHandler');
+const ApiError = require('../utils/ApiError');
 const otpGenerator = require('otp-generator');
 const bcrypt = require("bcrypt");
 
@@ -29,6 +30,11 @@ const sendOtpOnPhone = ApiHandler(async (req, res, next) => {
         return next();
     } catch (error) {
         console.log(error);
+         return res
+        .status(500)
+        .json(
+            new ApiError(500, {}, error?.message)
+        )
     }
 
 });
