@@ -16,6 +16,8 @@ function Register() {
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [otp, setOtp] = useState(null);
   const [loading, setLoading] = useState(false);
+  
+  const [passError, setPassError] = useState([]);
 
   const nagigate = useNavigate();
 
@@ -58,7 +60,8 @@ function Register() {
         });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      setPassError(!error?.response?.data?.data?.contains?[]:error?.response?.data?.data?.contains);
       toast.error(error?.response?.data?.message, {
         position: "top-right",
         autoClose: 5000,
@@ -192,6 +195,13 @@ function Register() {
                       <span onClick={() => showReTypedPassword ? setShowReTypedPassword(false) : setShowReTypedPassword(true)} className="text-sm text-gray-400 focus:outline-none focus:text-indigo-500 hover:text-indigo-500 dark:hover:text-indigo-300 cursor-pointer">{reTypedPassword && (showReTypedPassword ? "Hide" : "Show")}</span>
                     </div>
                     <input type={showReTypedPassword ? "text" : "password"} name="password" value={reTypedPassword} onChange={(e) => setReTypedPassword(e.target.value)} id="password" placeholder="Your Password" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md" />
+                  </div>
+                   <div className='mb-6'>
+                    {
+                      passError.map((x) => (
+                        <div className='text-red-400'>▪ {x}</div>
+                      ))
+                    }
                   </div>
                   <div className="mb-6">
                     <button onClick={() => signUpHandler()} disabled={loading ? true : false} type="button" className="w-full px-3 py-4 text-white bg-gray-700 rounded-md hover:bg-gray-900 focus:outline-none">{loading ? "Loading..." : "Sign Up"}</button>
