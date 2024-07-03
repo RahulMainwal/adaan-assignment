@@ -22,16 +22,16 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
-// app.use("*", async(req, res, next) => {
-//     if(req.get("origin") === process.env.CORS_ORIGIN) {
-//         next();
-//     }
-//     return res
-//     .status(401)
-//     .json({
-//         message: "Permission is not allowed!"
-//     })
-// });
+app.use("*", async(req, res, next) => {
+    if(req.get("origin") === process.env.CORS_ORIGIN) {
+        return next();
+    }
+    return res
+    .status(401)
+    .json({
+        message: "Permission is not allowed!"
+    })
+});
 
 app.get("/", (req, res) => {
     res.send("Hello from server")
