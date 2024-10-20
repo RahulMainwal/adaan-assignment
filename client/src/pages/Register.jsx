@@ -21,17 +21,6 @@ function Register() {
 
   const nagigate = useNavigate();
 
-   const handleWheel = (event) => {
-    event.preventDefault(); // Prevent scroll behavior when using the mouse wheel
-  };
-
-  const handleKeyDown = (event) => {
-    // Prevent arrow key increments/decrements
-    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-      event.preventDefault();
-    }
-  };
-
   const signUpHandler = async () => {
     setLoading(true);
     try {
@@ -138,6 +127,34 @@ function Register() {
     setLoading(false);
   }
 
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    const handleWheel = (event) => {
+      event.preventDefault(); // Prevent scroll behavior when using the mouse wheel
+    };
+
+    const handleKeyDown = (event) => {
+      // Prevent arrow key increments/decrements
+      if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        event.preventDefault();
+      }
+    };
+
+    const inputElement = inputRef.current;
+
+    // Attach wheel event listener with passive set to false
+    inputElement.addEventListener('wheel', handleWheel, { passive: false });
+    inputElement.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      // Clean up event listeners on component unmount
+      inputElement.removeEventListener('wheel', handleWheel);
+      inputElement.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   return (
     isOtpSent
       ?
@@ -153,11 +170,11 @@ function Register() {
                 <div className="m-7">
                   <div className="mb-6">
                     <label htmlFor="phone" className="block mb-2 text-sm text-gray-600 dark:text-gray-400">Phone Number</label>
-                    <input onWheel={(event) => handleWheel(event)} onKeyDown={(event) => handleKeyDown(event)} type="number" disabled readOnly value={phone} onChange={(e) => setPhone(e.target.value)} pattern="[0-9]{5}" name="phone" id="phone" placeholder="Phone number" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md" />
+                    <input ref={inputRef} type="number" disabled readOnly value={phone} onChange={(e) => setPhone(e.target.value)} pattern="[0-9]{5}" name="phone" id="phone" placeholder="Phone number" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md" />
                   </div>
                   <div className="mb-6">
                     <label htmlFor="otp" className="block mb-2 text-sm text-gray-600 dark:text-gray-400">Your OTP (One Time Password)</label>
-                    <input onWheel={(event) => handleWheel(event)} onKeyDown={(event) => handleKeyDown(event)} type="number" value={otp} onChange={(e) => setOtp(e.target.value)} pattern="[0-9]{5}" name="otp" id="otp" placeholder="Enter 6 digit OTP" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md" />
+                    <input ref={inputRef} type="number" value={otp} onChange={(e) => setOtp(e.target.value)} pattern="[0-9]{5}" name="otp" id="otp" placeholder="Enter 6 digit OTP" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md" />
                   </div>
                   <div className="mb-6">
                     <button disabled={loading ? true : false} onClick={() => signUpVerificationHandler()} type="button" className="w-full px-3 py-4 text-white bg-gray-700 rounded-md hover:bg-gray-900 focus:outline-none">{loading ? "Loading..." : "Verify OTP"}</button>
@@ -190,7 +207,7 @@ function Register() {
                   </div>
                   <div className="mb-6">
                     <label htmlFor="phone" className="block mb-2 text-sm text-gray-600 dark:text-gray-400">Phone Number</label>
-                    <input onWheel={(event) => handleWheel(event)} onKeyDown={(event) => handleKeyDown(event)} type="number" value={phone} onChange={(e) => setPhone(e.target.value)} pattern="[0-9]{5}" name="phone" id="phone" placeholder="Phone number" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md" />
+                    <input ref={inputRef} type="number" value={phone} onChange={(e) => setPhone(e.target.value)} pattern="[0-9]{5}" name="phone" id="phone" placeholder="Phone number" className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md" />
                   </div>
                   <div className="mb-6">
                     <div className="flex justify-between mb-2">
